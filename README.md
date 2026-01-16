@@ -1,3 +1,3 @@
-# watchbase_app
+# WatchBase
 
-WatchBase - Everything worth watching, in one place
+Everything worth watching, in one place
