@@ -1,9 +1,3 @@
-class PopularMovieList {
-  const PopularMovieList(this.popularMovies);
-
-  final List<PopularMovie> popularMovies;
-}
-
 class PopularMovie {
   const PopularMovie({
     required this.id,

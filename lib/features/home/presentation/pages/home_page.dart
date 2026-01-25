@@ -21,18 +21,18 @@ class HomePage extends StatelessWidget {
               );
             case PopularMoviesSuccess():
               return ListView.builder(
-                itemCount: state.popularMovies.popularMovies.length,
+                itemCount: state.popularMovies.length,
                 itemBuilder: (context, index) {
                   return ListTile(
                     key: ValueKey(
-                      state.popularMovies.popularMovies[index].id,
+                      state.popularMovies[index].id,
                     ),
                     title: Text(
-                      state.popularMovies.popularMovies[index].title,
+                      state.popularMovies[index].title,
                     ),
                     subtitle: Text(
                       DateFormat.yMMMMd().format(
-                        state.popularMovies.popularMovies[index].releaseDate,
+                        state.popularMovies[index].releaseDate,
                       ),
                     ),
                   );

@@ -10,6 +10,6 @@ class GetPopularMovies {
 
   final PopularMoviesRepository _popularMoviesRepository;
 
-  Future<Either<Failure, PopularMovieList>> call() async =>
+  Future<Either<Failure, List<PopularMovie>>> call() async =>
       await _popularMoviesRepository.getPopularMovies();
 }

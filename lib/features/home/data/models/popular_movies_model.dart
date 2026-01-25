@@ -22,7 +22,7 @@ abstract class PopularMoviesModel with _$PopularMoviesModel {
 }
 
 extension PopularMoviesModelX on PopularMoviesModel {
-  PopularMovieList toEntity() {
+  List<PopularMovie> toEntity() {
     final List<PopularMovie> popularMovies = results
         .map(
           (result) => PopularMovie(
@@ -35,6 +35,6 @@ extension PopularMoviesModelX on PopularMoviesModel {
         )
         .toList();
 
-    return PopularMovieList(popularMovies);
+    return popularMovies;
   }
 }

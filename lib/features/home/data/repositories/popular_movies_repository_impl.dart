@@ -14,14 +14,14 @@ class PopularMoviesRepositoryImpl implements PopularMoviesRepository {
   final PopularMoviesRemoteDataSource _remoteDataSource;
 
   @override
-  Future<Either<Failure, PopularMovieList>> getPopularMovies() async {
+  Future<Either<Failure, List<PopularMovie>>> getPopularMovies() async {
     try {
       final popularMoviesModel = await _remoteDataSource.fetchPopularMovies();
       return right(popularMoviesModel.toEntity());
     } on Failure catch (f) {
       return left(f);
     } catch (e) {
-      return left(ServerFailure(message: 'Unexpected error: $e'));
+      return left(ServerFailure(message: e.toString()));
     }
   }
 }

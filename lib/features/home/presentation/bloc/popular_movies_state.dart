@@ -20,7 +20,7 @@ final class PopularMoviesSuccess extends PopularMoviesState {
     required this.popularMovies,
   });
 
-  final PopularMovieList popularMovies;
+  final List<PopularMovie> popularMovies;
 
   @override
   List<Object> get props => [popularMovies];

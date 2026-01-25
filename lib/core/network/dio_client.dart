@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import 'package:watchbase_app/core/utils/constants.dart';
+import 'package:watchbase_app/core/config/app_config.dart';
 
 class DioClient {
   late final Dio _dio;
@@ -8,7 +8,7 @@ class DioClient {
   DioClient() {
     _dio = Dio(
       BaseOptions(
-        baseUrl: Constants.apiBaseUrl,
+        baseUrl: AppConfig.tmdbApiBaseUrl,
         connectTimeout: const Duration(seconds: 10),
         receiveTimeout: const Duration(seconds: 10),
         responseType: ResponseType.json,
@@ -81,11 +81,13 @@ class DioClient {
       return await _dio.request(
         path,
         data: data,
-        queryParameters: queryParameters,
+        queryParameters: {
+          'api_key': AppConfig.tmdbApiKey,
+          ...?queryParameters,
+        },
         options: Options(
           method: method,
           headers: {
-            // TODO: insert auth token
             'accept': 'application/json',
           },
         ),
