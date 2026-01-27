@@ -2,6 +2,7 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'package:watchbase_app/core/network/tmdb_image_url_builder.dart';
 import 'package:watchbase_app/features/home/data/models/movie_model.dart';
 import 'package:watchbase_app/features/home/domain/entities/popular_movies.dart';
 
@@ -28,7 +29,7 @@ extension PopularMoviesModelX on PopularMoviesModel {
           (result) => PopularMovie(
             id: result.id,
             title: result.title,
-            posterUrl: result.posterPath,
+            posterUrl: TmdbImageUrlBuilder.poster(result.posterPath),
             popularity: result.popularity,
             releaseDate: result.releaseDate,
           ),

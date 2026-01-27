@@ -11,7 +11,7 @@ class PopularMoviesRemoteDataSource {
 
   Future<PopularMoviesModel> fetchPopularMovies() async {
     final response = await _dioClient.get(
-      '${Constants.apiVersionV3}/movie/popular',
+      '/${Constants.apiVersionV3}/movie/popular',
     );
 
     if (response.statusCode != 200) {

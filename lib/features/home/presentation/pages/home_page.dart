@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 
 import 'package:watchbase_app/features/home/presentation/bloc/popular_movies_bloc.dart';
+import 'package:watchbase_app/features/home/presentation/widgets/popular_movies_section.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -20,23 +20,15 @@ class HomePage extends StatelessWidget {
                 child: CircularProgressIndicator.adaptive(),
               );
             case PopularMoviesSuccess():
-              return ListView.builder(
-                itemCount: state.popularMovies.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    key: ValueKey(
-                      state.popularMovies[index].id,
+              return Scaffold(
+                appBar: AppBar(),
+                body: ListView(
+                  children: [
+                    PopularMoviesSection(
+                      popularMovies: state.popularMovies,
                     ),
-                    title: Text(
-                      state.popularMovies[index].title,
-                    ),
-                    subtitle: Text(
-                      DateFormat.yMMMMd().format(
-                        state.popularMovies[index].releaseDate,
-                      ),
-                    ),
-                  );
-                },
+                  ],
+                ),
               );
             case PopularMoviesError():
               return Center(
