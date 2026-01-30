@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import 'package:watchbase_app/features/home/domain/entities/popular_movies.dart';
+import 'package:watchbase_app/features/home/domain/entities/popular_movie.dart';
 import 'package:watchbase_app/features/home/domain/usecases/get_popular_movies.dart';
 
 part 'popular_movies_event.dart';

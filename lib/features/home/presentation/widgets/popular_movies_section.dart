@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:intl/intl.dart';
 
-import 'package:watchbase_app/features/home/domain/entities/popular_movies.dart';
+import 'package:watchbase_app/features/home/domain/entities/popular_movie.dart';
 import 'package:watchbase_app/features/home/presentation/widgets/movie_card.dart';
 
 class PopularMoviesSection extends StatelessWidget {

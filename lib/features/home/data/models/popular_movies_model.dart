@@ -4,7 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'package:watchbase_app/core/network/tmdb_image_url_builder.dart';
 import 'package:watchbase_app/features/home/data/models/movie_model.dart';
-import 'package:watchbase_app/features/home/domain/entities/popular_movies.dart';
+import 'package:watchbase_app/features/home/domain/entities/popular_movie.dart';
 
 part 'popular_movies_model.freezed.dart';
 part 'popular_movies_model.g.dart';

@@ -3,7 +3,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:watchbase_app/core/utils/failure.dart';
 import 'package:watchbase_app/features/home/data/datasources/popular_movies_remote_data_source.dart';
 import 'package:watchbase_app/features/home/data/models/popular_movies_model.dart';
-import 'package:watchbase_app/features/home/domain/entities/popular_movies.dart';
+import 'package:watchbase_app/features/home/domain/entities/popular_movie.dart';
 import 'package:watchbase_app/features/home/domain/repositories/popular_movies_repository.dart';
 
 class PopularMoviesRepositoryImpl implements PopularMoviesRepository {
