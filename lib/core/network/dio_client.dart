@@ -1,8 +1,13 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 
 import 'package:watchbase_app/core/config/app_config.dart';
+import 'package:watchbase_app/core/utils/failure.dart';
 
 class DioClient {
+  static const int _maxRetryAttempts = 3;
+
   late final Dio _dio;
 
   DioClient() {
@@ -77,45 +82,103 @@ class DioClient {
     Object? data,
     Map<String, dynamic>? queryParameters,
   }) async {
-    try {
-      return await _dio.request(
-        path,
-        data: data,
-        queryParameters: {
-          'api_key': AppConfig.tmdbApiKey,
-          ...?queryParameters,
-        },
-        options: Options(
-          method: method,
-          headers: {
-            'accept': 'application/json',
+    var attempt = 0;
+
+    while (true) {
+      try {
+        return await _dio.request(
+          path,
+          data: data,
+          queryParameters: {
+            'api_key': AppConfig.tmdbApiKey,
+            ...?queryParameters,
           },
-        ),
-      );
-    } on DioException catch (e) {
-      throw _handleError(e);
+          options: Options(
+            method: method,
+            headers: {
+              'accept': 'application/json',
+            },
+          ),
+        );
+      } on DioException catch (e) {
+        attempt += 1;
+
+        if (_shouldRetry(e, attempt)) {
+          await Future<void>.delayed(Duration(milliseconds: 250 * attempt));
+          continue;
+        }
+
+        throw _handleError(e);
+      }
     }
   }
 
-  /// Error handling logic
-  String _handleError(DioException error) {
+  bool _shouldRetry(DioException error, int attempt) {
+    if (attempt >= _maxRetryAttempts) {
+      return false;
+    }
+
+    return switch (error.type) {
+      DioExceptionType.connectionTimeout ||
+      DioExceptionType.receiveTimeout ||
+      DioExceptionType.connectionError => true,
+      _ => false,
+    };
+  }
+
+  Failure _handleError(DioException error) {
     switch (error.type) {
       case DioExceptionType.connectionTimeout:
-        return 'Connection Timeout.';
+        return const ConnectionFailure(
+          message: 'Connection timed out. Please try again.',
+        );
       case DioExceptionType.badResponse:
-        return 'Unexpected error: ${error.response?.statusCode}';
+        return ServerFailure(
+          statusCode: error.response?.statusCode,
+          message:
+              _extractServerMessage(error.response) ??
+              'Unexpected server response.',
+        );
       case DioExceptionType.sendTimeout:
-        return 'Send Timeout.';
+        return const ConnectionFailure(
+          message: 'Request send timed out. Please try again.',
+        );
       case DioExceptionType.receiveTimeout:
-        return 'Receive Timeout.';
+        return const ConnectionFailure(
+          message: 'Response timed out. Please try again.',
+        );
       case DioExceptionType.badCertificate:
-        return 'Bad Certificate.';
+        return const ServerFailure(
+          message: 'Could not verify server certificate.',
+        );
       case DioExceptionType.cancel:
-        return 'Request Cancelled.';
+        return const ServerFailure(message: 'Request was cancelled.');
       case DioExceptionType.connectionError:
-        return 'Connection Error.';
+        return const ConnectionFailure(
+          message: 'Connection error. Please check your internet and retry.',
+        );
       case DioExceptionType.unknown:
-        return 'Unexpected error occurred.';
+        final errorCause = error.error;
+        if (errorCause is SocketException) {
+          return const ConnectionFailure(
+            message: 'Network unavailable. Please check your connection.',
+          );
+        }
+
+        return ServerFailure(
+          message: error.message ?? 'Unexpected error occurred.',
+        );
     }
+  }
+
+  String? _extractServerMessage(Response<dynamic>? response) {
+    final data = response?.data;
+    if (data is Map<String, dynamic>) {
+      final statusMessage = data['status_message'];
+      if (statusMessage is String && statusMessage.isNotEmpty) {
+        return statusMessage;
+      }
+    }
+    return response?.statusMessage;
   }
 }

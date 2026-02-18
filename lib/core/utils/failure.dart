@@ -18,7 +18,9 @@ class ServerFailure extends Failure {
 }
 
 class ConnectionFailure extends Failure {
-  const ConnectionFailure() : super('Please check your internet connection');
+  const ConnectionFailure({
+    String message = 'Please check your internet connection',
+  }) : super(message);
 }
 
 class ParsingFailure extends Failure {

@@ -7,11 +7,15 @@ class MovieListSection extends StatelessWidget {
   const MovieListSection({
     required this.movies,
     required this.title,
+    this.isLoading = false,
+    this.skeletonItemCount = 6,
     super.key,
   });
 
   final List<MovieListItem> movies;
   final String title;
+  final bool isLoading;
+  final int skeletonItemCount;
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +33,8 @@ class MovieListSection extends StatelessWidget {
         final posterHeight = posterWidth * (3 / 2);
 
         final totalItemHeight = posterHeight + 16;
+
+        final itemCount = isLoading ? skeletonItemCount : movies.length;
 
         return Column(
           mainAxisSize: .min,
@@ -49,7 +55,7 @@ class MovieListSection extends StatelessWidget {
             SizedBox(
               height: totalItemHeight,
               child: ListView.separated(
-                itemCount: movies.length,
+                itemCount: itemCount,
                 scrollDirection: .horizontal,
                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
                 itemBuilder: (_, index) {
@@ -57,7 +63,8 @@ class MovieListSection extends StatelessWidget {
                     width: posterWidth,
                     child: MovieCard(
                       posterSize: Size(posterWidth, posterHeight),
-                      posterUrl: movies[index].posterUrl,
+                      posterUrl: isLoading ? '' : movies[index].posterUrl,
+                      isLoading: isLoading,
                       onTap: () {},
                     ),
                   );

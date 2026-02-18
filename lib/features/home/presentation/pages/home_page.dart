@@ -33,7 +33,7 @@ class _PopularMoviesSectionView extends StatelessWidget {
         switch (state) {
           case PopularMoviesInitial():
           case PopularMoviesLoading():
-            return const _SectionLoader();
+            return const _SectionLoader(title: 'Popular Movies');
           case PopularMoviesSuccess():
             return MovieListSection(
               title: 'Popular Movies',
@@ -60,7 +60,7 @@ class _TopRatedMoviesSectionView extends StatelessWidget {
         switch (state) {
           case TopRatedMoviesInitial():
           case TopRatedMoviesLoading():
-            return const _SectionLoader();
+            return const _SectionLoader(title: 'Top Rated Movies');
           case TopRatedMoviesSuccess():
             return MovieListSection(
               title: 'Top Rated Movies',
@@ -78,15 +78,16 @@ class _TopRatedMoviesSectionView extends StatelessWidget {
 }
 
 class _SectionLoader extends StatelessWidget {
-  const _SectionLoader();
+  const _SectionLoader({required this.title});
+
+  final String title;
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
-      height: 200,
-      child: Center(
-        child: CircularProgressIndicator.adaptive(),
-      ),
+    return MovieListSection(
+      title: title,
+      movies: const [],
+      isLoading: true,
     );
   }
 }
