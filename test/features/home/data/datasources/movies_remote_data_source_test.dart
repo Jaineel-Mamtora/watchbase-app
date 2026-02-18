@@ -5,25 +5,26 @@ import 'package:mocktail/mocktail.dart';
 import 'package:watchbase_app/core/network/dio_client.dart';
 import 'package:watchbase_app/core/utils/constants.dart';
 import 'package:watchbase_app/core/utils/failure.dart';
-import 'package:watchbase_app/features/home/data/datasources/popular_movies_remote_data_source.dart';
+import 'package:watchbase_app/features/home/data/datasources/movies_remote_data_source.dart';
 import 'package:watchbase_app/features/home/data/models/popular_movies_model.dart';
 
 class MockDioClient extends Mock implements DioClient {}
 
 void main() {
-  late PopularMoviesRemoteDataSource popularMoviesRemoteDataSource;
+  late MoviesRemoteDataSource moviesRemoteDataSource;
   late MockDioClient mockDioClient;
 
   final baseUrl = '/${Constants.apiVersionV3}/movie/popular';
+  final topRatedBaseUrl = '/${Constants.apiVersionV3}/movie/top_rated';
 
   setUp(() {
     mockDioClient = MockDioClient();
-    popularMoviesRemoteDataSource = PopularMoviesRemoteDataSource(
+    moviesRemoteDataSource = MoviesRemoteDataSource(
       mockDioClient,
     );
   });
 
-  group('Popular Movies Remote Datasource', () {
+  group('Movies Remote Datasource', () {
     test('should return popular movies model on success', () async {
       final mockPopularMoviesResponse = Response(
         data: <String, dynamic>{
@@ -88,7 +89,7 @@ void main() {
       );
 
       // act
-      final result = await popularMoviesRemoteDataSource.fetchPopularMovies();
+      final result = await moviesRemoteDataSource.fetchPopularMovies();
 
       // assert
       expect(
@@ -119,7 +120,7 @@ void main() {
         (_) async => failureResponse,
       );
 
-      final call = popularMoviesRemoteDataSource.fetchPopularMovies;
+      final call = moviesRemoteDataSource.fetchPopularMovies;
 
       await expectLater(
         call,
@@ -149,7 +150,7 @@ void main() {
         (_) async => invalidResponse,
       );
 
-      final call = popularMoviesRemoteDataSource.fetchPopularMovies;
+      final call = moviesRemoteDataSource.fetchPopularMovies;
 
       await expectLater(
         call,
@@ -186,7 +187,7 @@ void main() {
         (_) async => emptyResultsResponse,
       );
 
-      final call = popularMoviesRemoteDataSource.fetchPopularMovies;
+      final call = moviesRemoteDataSource.fetchPopularMovies;
 
       await expectLater(
         call,
@@ -194,7 +195,7 @@ void main() {
           isA<NotFoundFailure>().having(
             (e) => e.message,
             'message',
-            'NotFoundFailure: No Popular Movies Found',
+            'NotFoundFailure: No Movies Found',
           ),
         ),
       );
@@ -223,7 +224,7 @@ void main() {
         (_) async => invalidResultsResponse,
       );
 
-      final call = popularMoviesRemoteDataSource.fetchPopularMovies;
+      final call = moviesRemoteDataSource.fetchPopularMovies;
 
       await expectLater(
         call,
@@ -231,7 +232,7 @@ void main() {
           isA<NotFoundFailure>().having(
             (e) => e.message,
             'message',
-            'NotFoundFailure: No Popular Movies Found',
+            'NotFoundFailure: No Movies Found',
           ),
         ),
       );
@@ -241,5 +242,48 @@ void main() {
       ).called(1);
       verifyNoMoreInteractions(mockDioClient);
     });
+
+    test(
+      'should call top-rated endpoint and return model on success',
+      () async {
+        final mockTopRatedResponse = Response(
+          data: <String, dynamic>{
+            'page': 1,
+            'results': [
+              {
+                'adult': false,
+                'backdrop_path': '/tmU7GeKVybMWFButWEGl2M4GeiP.jpg',
+                'genre_ids': [18, 80],
+                'id': 238,
+                'original_language': 'en',
+                'original_title': 'The Godfather',
+                'overview': 'overview',
+                'popularity': 100.932,
+                'poster_path': '/3bhkrj58Vtu7enYsRolD1fZdja1.jpg',
+                'release_date': '1972-03-14',
+                'title': 'The Godfather',
+                'video': false,
+                'vote_average': 8.7,
+                'vote_count': 17806,
+              },
+            ],
+            'total_pages': 10,
+            'total_results': 200,
+          },
+          statusCode: 200,
+          requestOptions: RequestOptions(),
+        );
+
+        when(() => mockDioClient.get(topRatedBaseUrl)).thenAnswer(
+          (_) async => mockTopRatedResponse,
+        );
+
+        final result = await moviesRemoteDataSource.fetchTopRatedMovies();
+
+        expect(result, PopularMoviesModel.fromJson(mockTopRatedResponse.data!));
+        verify(() => mockDioClient.get(topRatedBaseUrl)).called(1);
+        verifyNoMoreInteractions(mockDioClient);
+      },
+    );
   });
 }

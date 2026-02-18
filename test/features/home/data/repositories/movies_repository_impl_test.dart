@@ -3,23 +3,25 @@ import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
 
 import 'package:watchbase_app/core/utils/failure.dart';
-import 'package:watchbase_app/features/home/data/datasources/popular_movies_remote_data_source.dart';
+import 'package:watchbase_app/features/home/data/datasources/movies_remote_data_source.dart';
 import 'package:watchbase_app/features/home/data/models/movie_model.dart';
 import 'package:watchbase_app/features/home/data/models/popular_movies_model.dart';
-import 'package:watchbase_app/features/home/data/repositories/popular_movies_repository_impl.dart';
+import 'package:watchbase_app/features/home/data/repositories/movies_repository_impl.dart';
+import 'package:watchbase_app/features/home/domain/entities/movie_list_category.dart';
 import 'package:watchbase_app/features/home/domain/entities/popular_movie.dart';
+import 'package:watchbase_app/features/home/domain/entities/top_rated_movie.dart';
 
-class MockPopularMoviesRemoteDataSource extends Mock
-    implements PopularMoviesRemoteDataSource {}
+class MockMoviesRemoteDataSource extends Mock
+    implements MoviesRemoteDataSource {}
 
 void main() {
-  late PopularMoviesRemoteDataSource popularMoviesRemoteDataSource;
-  late PopularMoviesRepositoryImpl popularMoviesRepositoryImpl;
+  late MoviesRemoteDataSource moviesRemoteDataSource;
+  late MoviesRepositoryImpl moviesRepositoryImpl;
 
   setUp(() {
-    popularMoviesRemoteDataSource = MockPopularMoviesRemoteDataSource();
-    popularMoviesRepositoryImpl = PopularMoviesRepositoryImpl(
-      popularMoviesRemoteDataSource,
+    moviesRemoteDataSource = MockMoviesRemoteDataSource();
+    moviesRepositoryImpl = MoviesRepositoryImpl(
+      moviesRemoteDataSource,
     );
   });
 
@@ -74,18 +76,20 @@ void main() {
     totalResults: 200,
   );
 
-  group('Popular Movies Repository Implementation', () {
+  group('Movies Repository Implementation', () {
     test(
       'should return list of popular movies on remote datasource fetch success',
       () async {
         // arrange dependencies + stubs
         when(
-          () => popularMoviesRemoteDataSource.fetchPopularMovies(),
+          () => moviesRemoteDataSource.fetchMovies(
+            MovieListCategory.popular,
+          ),
         ).thenAnswer((_) async => testPopularMoviesModel);
 
         // act (call usecase/repository/add event)
         final Either<Failure, List<PopularMovie>> result =
-            await popularMoviesRepositoryImpl.getPopularMovies();
+            await moviesRepositoryImpl.getPopularMovies();
 
         // assert outputs (states, returned values, thrown errors)
         expect(result.isRight(), isTrue);
@@ -105,9 +109,11 @@ void main() {
         );
 
         verify(
-          () => popularMoviesRemoteDataSource.fetchPopularMovies(),
+          () => moviesRemoteDataSource.fetchMovies(
+            MovieListCategory.popular,
+          ),
         ).called(1);
-        verifyNoMoreInteractions(popularMoviesRemoteDataSource);
+        verifyNoMoreInteractions(moviesRemoteDataSource);
       },
     );
 
@@ -115,15 +121,17 @@ void main() {
       'should return left Failure when remote datasource throws a Failure',
       () async {
         const failure = NotFoundFailure(
-          'NotFoundFailure: No Popular Movies Found',
+          'NotFoundFailure: No Movies Found',
         );
 
         when(
-          () => popularMoviesRemoteDataSource.fetchPopularMovies(),
+          () => moviesRemoteDataSource.fetchMovies(
+            MovieListCategory.popular,
+          ),
         ).thenThrow(failure);
 
         final Either<Failure, List<PopularMovie>> result =
-            await popularMoviesRepositoryImpl.getPopularMovies();
+            await moviesRepositoryImpl.getPopularMovies();
 
         expect(result.isLeft(), isTrue);
         result.match(
@@ -132,9 +140,11 @@ void main() {
         );
 
         verify(
-          () => popularMoviesRemoteDataSource.fetchPopularMovies(),
+          () => moviesRemoteDataSource.fetchMovies(
+            MovieListCategory.popular,
+          ),
         ).called(1);
-        verifyNoMoreInteractions(popularMoviesRemoteDataSource);
+        verifyNoMoreInteractions(moviesRemoteDataSource);
       },
     );
 
@@ -142,11 +152,13 @@ void main() {
       'should wrap non-Failure errors in ServerFailure',
       () async {
         when(
-          () => popularMoviesRemoteDataSource.fetchPopularMovies(),
+          () => moviesRemoteDataSource.fetchMovies(
+            MovieListCategory.popular,
+          ),
         ).thenThrow(Exception('Some server failed'));
 
         final Either<Failure, List<PopularMovie>> result =
-            await popularMoviesRepositoryImpl.getPopularMovies();
+            await moviesRepositoryImpl.getPopularMovies();
 
         expect(result.isLeft(), isTrue);
         result.match(
@@ -158,9 +170,38 @@ void main() {
         );
 
         verify(
-          () => popularMoviesRemoteDataSource.fetchPopularMovies(),
+          () => moviesRemoteDataSource.fetchMovies(
+            MovieListCategory.popular,
+          ),
         ).called(1);
-        verifyNoMoreInteractions(popularMoviesRemoteDataSource);
+        verifyNoMoreInteractions(moviesRemoteDataSource);
+      },
+    );
+
+    test(
+      'should return list of top-rated movies on remote datasource fetch success',
+      () async {
+        when(
+          () => moviesRemoteDataSource.fetchTopRatedMovies(),
+        ).thenAnswer((_) async => testPopularMoviesModel);
+
+        final Either<Failure, List<TopRatedMovie>> result =
+            await moviesRepositoryImpl.getTopRatedMovies();
+
+        expect(result.isRight(), isTrue);
+        result.match(
+          (l) => fail('Expected Right, not left $l'),
+          (r) {
+            expect(r, isA<List<TopRatedMovie>>());
+            expect(r, hasLength(2));
+            expect(r[0].voteAverage, 6.5);
+            expect(r[1].voteCount, 7535);
+          },
+        );
+        verify(
+          () => moviesRemoteDataSource.fetchTopRatedMovies(),
+        ).called(1);
+        verifyNoMoreInteractions(moviesRemoteDataSource);
       },
     );
   });

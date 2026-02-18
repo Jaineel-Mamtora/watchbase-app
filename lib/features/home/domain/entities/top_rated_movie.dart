@@ -1,11 +1,13 @@
 import 'package:watchbase_app/features/home/domain/entities/movie_list_item.dart';
 
-class PopularMovie implements MovieListItem {
-  const PopularMovie({
+class TopRatedMovie implements MovieListItem {
+  const TopRatedMovie({
     required this.id,
     required this.posterUrl,
     required this.title,
     required this.releaseDate,
+    required this.voteAverage,
+    required this.voteCount,
     required this.popularity,
   });
 
@@ -21,5 +23,7 @@ class PopularMovie implements MovieListItem {
   @override
   final DateTime releaseDate;
 
+  final num voteAverage;
+  final num voteCount;
   final num popularity;
 }

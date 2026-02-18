@@ -5,6 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:watchbase_app/core/network/tmdb_image_url_builder.dart';
 import 'package:watchbase_app/features/home/data/models/movie_model.dart';
 import 'package:watchbase_app/features/home/domain/entities/popular_movie.dart';
+import 'package:watchbase_app/features/home/domain/entities/top_rated_movie.dart';
 
 part 'popular_movies_model.freezed.dart';
 part 'popular_movies_model.g.dart';
@@ -23,7 +24,7 @@ abstract class PopularMoviesModel with _$PopularMoviesModel {
 }
 
 extension PopularMoviesModelX on PopularMoviesModel {
-  List<PopularMovie> toEntity() {
+  List<PopularMovie> toPopularEntity() {
     final List<PopularMovie> popularMovies = results
         .map(
           (result) => PopularMovie(
@@ -37,5 +38,23 @@ extension PopularMoviesModelX on PopularMoviesModel {
         .toList();
 
     return popularMovies;
+  }
+
+  List<TopRatedMovie> toTopRatedEntity() {
+    final List<TopRatedMovie> topRatedMovies = results
+        .map(
+          (result) => TopRatedMovie(
+            id: result.id,
+            title: result.title,
+            posterUrl: TmdbImageUrlBuilder.poster(result.posterPath),
+            releaseDate: result.releaseDate,
+            voteAverage: result.voteAverage,
+            voteCount: result.voteCount,
+            popularity: result.popularity,
+          ),
+        )
+        .toList();
+
+    return topRatedMovies;
   }
 }

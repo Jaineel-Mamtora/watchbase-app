@@ -12,15 +12,11 @@ class MovieCard extends StatelessWidget {
     super.key,
     required this.posterSize,
     required this.posterUrl,
-    required this.title,
-    required this.subtitle,
     required this.onTap,
   });
 
   final Size posterSize;
   final String posterUrl;
-  final String title;
-  final String subtitle;
   final OnMovieTap onTap;
 
   @override
@@ -39,60 +35,30 @@ class MovieCard extends StatelessWidget {
                 width: 1,
               ),
             ),
-      child: Column(
-        crossAxisAlignment: .start,
-        mainAxisSize: .min,
-        children: [
-          SizedBox(
-            height: posterSize.height,
-            width: posterSize.width,
-            child: AspectRatio(
-              aspectRatio: 2.0 / 3.0,
-              child: CachedNetworkImage(
-                imageUrl: posterUrl,
-                imageBuilder: (context, imageProvider) => Container(
-                  height: posterSize.height,
-                  width: posterSize.width,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                      PlatformInfo.isIOS
-                          ? RadiusTokens.iosCard
-                          : RadiusTokens.materialCard,
-                    ),
-                    image: DecorationImage(
-                      image: imageProvider,
-                      fit: .cover,
-                    ),
-                  ),
+      child: SizedBox(
+        height: posterSize.height,
+        width: posterSize.width,
+        child: AspectRatio(
+          aspectRatio: 2.0 / 3.0,
+          child: CachedNetworkImage(
+            imageUrl: posterUrl,
+            imageBuilder: (context, imageProvider) => Container(
+              height: posterSize.height,
+              width: posterSize.width,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(
+                  PlatformInfo.isIOS
+                      ? RadiusTokens.iosCard
+                      : RadiusTokens.materialCard,
+                ),
+                image: DecorationImage(
+                  image: imageProvider,
+                  fit: .cover,
                 ),
               ),
             ),
           ),
-          const SizedBox(height: 6.0),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 8.0,
-            ),
-            child: Text(
-              title,
-              maxLines: 2,
-              overflow: .ellipsis,
-              style: theme.textTheme.bodyMedium?.copyWith(fontWeight: .bold),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 8.0,
-            ),
-            child: Text(
-              subtitle,
-              maxLines: 1,
-              overflow: .ellipsis,
-              style: theme.textTheme.bodySmall,
-            ),
-          ),
-          const SizedBox(height: 6.0),
-        ],
+        ),
       ),
     );
   }

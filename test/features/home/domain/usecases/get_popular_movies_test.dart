@@ -4,13 +4,13 @@ import 'package:mocktail/mocktail.dart';
 
 import 'package:watchbase_app/core/utils/failure.dart';
 import 'package:watchbase_app/features/home/domain/entities/popular_movie.dart';
-import 'package:watchbase_app/features/home/domain/repositories/popular_movies_repository.dart';
+import 'package:watchbase_app/features/home/domain/repositories/movies_repository.dart';
 import 'package:watchbase_app/features/home/domain/usecases/get_popular_movies.dart';
 
 /// -------------------------------
 /// Mock
 /// -------------------------------
-class MockMovieRepository extends Mock implements PopularMoviesRepository {}
+class MockMovieRepository extends Mock implements MoviesRepository {}
 
 void main() {
   late GetPopularMovies usecase;

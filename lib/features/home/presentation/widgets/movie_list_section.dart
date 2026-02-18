@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-import 'package:intl/intl.dart';
-
-import 'package:watchbase_app/features/home/domain/entities/popular_movie.dart';
+import 'package:watchbase_app/features/home/domain/entities/movie_list_item.dart';
 import 'package:watchbase_app/features/home/presentation/widgets/movie_card.dart';
 
-class PopularMoviesSection extends StatelessWidget {
-  const PopularMoviesSection({
-    required this.popularMovies,
+class MovieListSection extends StatelessWidget {
+  const MovieListSection({
+    required this.movies,
+    required this.title,
     super.key,
   });
 
-  final List<PopularMovie> popularMovies;
+  final List<MovieListItem> movies;
+  final String title;
 
   @override
   Widget build(BuildContext context) {
@@ -28,19 +28,7 @@ class PopularMoviesSection extends StatelessWidget {
 
         final posterHeight = posterWidth * (3 / 2);
 
-        final titleStyle = theme.textTheme.bodyMedium!;
-        final subtitleStyle = theme.textTheme.bodySmall!;
-
-        double textHeight =
-            (titleStyle.fontSize! * titleStyle.height! * 2) +
-            subtitleStyle.fontSize! * subtitleStyle.height!;
-
-        final totalItemHeight =
-            posterHeight +
-            6 + // spacing
-            textHeight +
-            6 + // spacing
-            16; // padding
+        final totalItemHeight = posterHeight + 16;
 
         return Column(
           mainAxisSize: .min,
@@ -48,11 +36,11 @@ class PopularMoviesSection extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: 18.0,
+                horizontal: 16.0,
                 vertical: 8.0,
               ),
               child: Text(
-                'Popular Movies',
+                title,
                 style: theme.textTheme.titleLarge?.copyWith(
                   fontWeight: .bold,
                 ),
@@ -61,7 +49,7 @@ class PopularMoviesSection extends StatelessWidget {
             SizedBox(
               height: totalItemHeight,
               child: ListView.separated(
-                itemCount: popularMovies.length,
+                itemCount: movies.length,
                 scrollDirection: .horizontal,
                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
                 itemBuilder: (_, index) {
@@ -69,11 +57,7 @@ class PopularMoviesSection extends StatelessWidget {
                     width: posterWidth,
                     child: MovieCard(
                       posterSize: Size(posterWidth, posterHeight),
-                      posterUrl: popularMovies[index].posterUrl,
-                      title: popularMovies[index].title,
-                      subtitle: DateFormat.yMMMMd().format(
-                        popularMovies[index].releaseDate,
-                      ),
+                      posterUrl: movies[index].posterUrl,
                       onTap: () {},
                     ),
                   );
