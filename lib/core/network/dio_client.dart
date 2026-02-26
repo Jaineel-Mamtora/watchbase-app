@@ -97,6 +97,7 @@ class DioClient {
             method: method,
             headers: {
               'accept': 'application/json',
+              'Connection': 'close',
             },
           ),
         );

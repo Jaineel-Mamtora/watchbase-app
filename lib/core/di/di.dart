@@ -6,6 +6,7 @@ import 'package:watchbase_app/features/home/data/repositories/movies_repository_
 import 'package:watchbase_app/features/home/domain/repositories/movies_repository.dart';
 import 'package:watchbase_app/features/home/domain/usecases/get_popular_movies.dart';
 import 'package:watchbase_app/features/home/domain/usecases/get_top_rated_movies.dart';
+import 'package:watchbase_app/features/home/domain/usecases/get_trending_movies.dart';
 import 'package:watchbase_app/features/home/presentation/bloc/movie_list_bloc.dart';
 
 final di = GetIt.instance;
@@ -39,8 +40,19 @@ Future<void> initDependencies() async {
       di<MoviesRepository>(),
     ),
   );
+  di.registerLazySingleton<GetTrendingMovies>(
+    () => GetTrendingMovies(
+      di<MoviesRepository>(),
+    ),
+  );
 
   // Bloc
+  di.registerFactory<MovieListBloc>(
+    () => MovieListBloc(
+      di<GetTrendingMovies>(),
+    ),
+    instanceName: 'TrendingBloc',
+  );
   di.registerFactory<MovieListBloc>(
     () => MovieListBloc(
       di<GetPopularMovies>(),
