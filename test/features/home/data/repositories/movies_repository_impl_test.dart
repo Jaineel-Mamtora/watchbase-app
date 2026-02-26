@@ -5,7 +5,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:watchbase_app/core/utils/failure.dart';
 import 'package:watchbase_app/features/home/data/datasources/movies_remote_data_source.dart';
 import 'package:watchbase_app/features/home/data/models/movie_model.dart';
-import 'package:watchbase_app/features/home/data/models/popular_movies_model.dart';
+import 'package:watchbase_app/features/home/data/models/movies_response_model.dart';
 import 'package:watchbase_app/features/home/data/repositories/movies_repository_impl.dart';
 import 'package:watchbase_app/features/home/domain/entities/movie_list_category.dart';
 import 'package:watchbase_app/features/home/domain/entities/popular_movie.dart';
@@ -25,7 +25,7 @@ void main() {
     );
   });
 
-  final testPopularMoviesModel = PopularMoviesModel(
+  final testPopularMoviesModel = MoviesResponseModel(
     page: 1,
     results: [
       MovieModel(

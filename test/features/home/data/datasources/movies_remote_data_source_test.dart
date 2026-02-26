@@ -6,7 +6,7 @@ import 'package:watchbase_app/core/network/dio_client.dart';
 import 'package:watchbase_app/core/utils/constants.dart';
 import 'package:watchbase_app/core/utils/failure.dart';
 import 'package:watchbase_app/features/home/data/datasources/movies_remote_data_source.dart';
-import 'package:watchbase_app/features/home/data/models/popular_movies_model.dart';
+import 'package:watchbase_app/features/home/data/models/movies_response_model.dart';
 
 class MockDioClient extends Mock implements DioClient {}
 
@@ -94,7 +94,7 @@ void main() {
       // assert
       expect(
         result,
-        PopularMoviesModel.fromJson(mockPopularMoviesResponse.data!),
+        MoviesResponseModel.fromJson(mockPopularMoviesResponse.data!),
       );
 
       verify(
@@ -280,7 +280,10 @@ void main() {
 
         final result = await moviesRemoteDataSource.fetchTopRatedMovies();
 
-        expect(result, PopularMoviesModel.fromJson(mockTopRatedResponse.data!));
+        expect(
+          result,
+          MoviesResponseModel.fromJson(mockTopRatedResponse.data!),
+        );
         verify(() => mockDioClient.get(topRatedBaseUrl)).called(1);
         verifyNoMoreInteractions(mockDioClient);
       },

@@ -1,7 +1,7 @@
-import 'package:watchbase_app/features/home/data/models/popular_movies_model.dart';
+import 'package:watchbase_app/features/home/data/models/movies_response_model.dart';
 
-typedef MoviesListModel = PopularMoviesModel;
-typedef TopRatedMoviesModel = PopularMoviesModel;
+typedef PopularMoviesModel = MoviesResponseModel;
+typedef TopRatedMoviesModel = MoviesResponseModel;
 
-MoviesListModel moviesListModelFromJson(Map<String, dynamic> json) =>
-    PopularMoviesModel.fromJson(json);
+MoviesResponseModel moviesListModelFromJson(Map<String, dynamic> json) =>
+    MoviesResponseModel.fromJson(json);

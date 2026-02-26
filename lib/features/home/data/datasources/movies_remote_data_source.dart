@@ -2,6 +2,7 @@ import 'package:watchbase_app/core/network/dio_client.dart';
 import 'package:watchbase_app/core/utils/constants.dart';
 import 'package:watchbase_app/core/utils/failure.dart';
 import 'package:watchbase_app/features/home/data/models/movies_list_model.dart';
+import 'package:watchbase_app/features/home/data/models/movies_response_model.dart';
 import 'package:watchbase_app/features/home/domain/entities/movie_list_category.dart';
 
 class MoviesRemoteDataSource {
@@ -9,13 +10,13 @@ class MoviesRemoteDataSource {
 
   final DioClient _dioClient;
 
-  Future<MoviesListModel> fetchPopularMovies() async =>
+  Future<PopularMoviesModel> fetchPopularMovies() async =>
       fetchMovies(MovieListCategory.popular);
 
   Future<TopRatedMoviesModel> fetchTopRatedMovies() async =>
       fetchMovies(MovieListCategory.topRated);
 
-  Future<MoviesListModel> fetchMovies(MovieListCategory category) async {
+  Future<MoviesResponseModel> fetchMovies(MovieListCategory category) async {
     final response = await _dioClient.get(_pathFor(category));
 
     if (response.statusCode != 200) {

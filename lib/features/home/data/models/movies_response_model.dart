@@ -1,5 +1,3 @@
-// ignore_for_file: invalid_annotation_target
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'package:watchbase_app/core/network/tmdb_image_url_builder.dart';
@@ -7,23 +5,23 @@ import 'package:watchbase_app/features/home/data/models/movie_model.dart';
 import 'package:watchbase_app/features/home/domain/entities/popular_movie.dart';
 import 'package:watchbase_app/features/home/domain/entities/top_rated_movie.dart';
 
-part 'popular_movies_model.freezed.dart';
-part 'popular_movies_model.g.dart';
+part 'movies_response_model.freezed.dart';
+part 'movies_response_model.g.dart';
 
 @freezed
-abstract class PopularMoviesModel with _$PopularMoviesModel {
-  factory PopularMoviesModel({
+abstract class MoviesResponseModel with _$MoviesResponseModel {
+  factory MoviesResponseModel({
     required num page,
     required List<MovieModel> results,
     @JsonKey(name: 'total_pages') required num totalPages,
     @JsonKey(name: 'total_results') required num totalResults,
-  }) = _PopularMoviesModel;
+  }) = _MoviesResponseModel;
 
-  factory PopularMoviesModel.fromJson(Map<String, dynamic> json) =>
-      _$PopularMoviesModelFromJson(json);
+  factory MoviesResponseModel.fromJson(Map<String, dynamic> json) =>
+      _$MoviesResponseModelFromJson(json);
 }
 
-extension PopularMoviesModelX on PopularMoviesModel {
+extension PopularMoviesModelX on MoviesResponseModel {
   List<PopularMovie> toPopularEntity() {
     final List<PopularMovie> popularMovies = results
         .map(
