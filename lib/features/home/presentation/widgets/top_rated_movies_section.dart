@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:watchbase_app/core/di/di.dart';
 
-import 'package:watchbase_app/features/home/presentation/bloc/top_rated_movies_bloc.dart';
+import 'package:watchbase_app/features/home/presentation/bloc/movie_list_bloc.dart';
 import 'package:watchbase_app/features/home/presentation/widgets/movie_list_section.dart';
 import 'package:watchbase_app/features/home/presentation/widgets/section_error.dart';
 import 'package:watchbase_app/features/home/presentation/widgets/section_loader.dart';
@@ -12,18 +13,20 @@ class TopRatedMoviesSectionView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TopRatedMoviesBloc, TopRatedMoviesState>(
+    return BlocBuilder<MovieListBloc, MovieListState>(
+      bloc: di<MovieListBloc>(instanceName: 'TopRatedBloc')
+        ..add(const MovieListFetch()),
       builder: (_, state) {
         switch (state) {
-          case TopRatedMoviesInitial():
-          case TopRatedMoviesLoading():
+          case MovieListInitial():
+          case MovieListLoading():
             return const SectionLoader(title: 'Top Rated Movies');
-          case TopRatedMoviesSuccess():
+          case MovieListSuccess():
             return MovieListSection(
               title: 'Top Rated Movies',
-              movies: state.topRatedMovies,
+              movies: state.movies,
             );
-          case TopRatedMoviesError():
+          case MovieListError():
             return SectionError(
               title: 'Top Rated Movies',
               message: state.message,

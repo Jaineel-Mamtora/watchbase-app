@@ -3,7 +3,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
 
 import 'package:watchbase_app/core/utils/failure.dart';
-import 'package:watchbase_app/features/home/domain/entities/top_rated_movie.dart';
+import 'package:watchbase_app/features/home/domain/entities/movie.dart';
 import 'package:watchbase_app/features/home/domain/repositories/movies_repository.dart';
 import 'package:watchbase_app/features/home/domain/usecases/get_top_rated_movies.dart';
 
@@ -19,7 +19,7 @@ void main() {
   });
 
   final testTopRatedMovies = [
-    TopRatedMovie(
+    Movie(
       id: 1,
       title: 'The Godfather',
       posterUrl: 'https://www.samplemovie/the_godfather.png',
@@ -28,7 +28,7 @@ void main() {
       voteCount: 17806,
       popularity: 100.932,
     ),
-    TopRatedMovie(
+    Movie(
       id: 2,
       title: 'The Shawshank Redemption',
       posterUrl: 'https://www.samplemovie/the_shawshank_redemption.png',
@@ -45,7 +45,7 @@ void main() {
         () => repository.getTopRatedMovies(),
       ).thenAnswer((_) async => Right(testTopRatedMovies));
 
-      final result = await usecase();
+      final result = await usecase(const NoParams());
 
       expect(result, Right(testTopRatedMovies));
       verify(() => repository.getTopRatedMovies()).called(1);
@@ -58,7 +58,7 @@ void main() {
         () => repository.getTopRatedMovies(),
       ).thenAnswer((_) async => const Left(failure));
 
-      final result = await usecase();
+      final result = await usecase(const NoParams());
 
       expect(result, const Left(failure));
       verify(() => repository.getTopRatedMovies()).called(1);

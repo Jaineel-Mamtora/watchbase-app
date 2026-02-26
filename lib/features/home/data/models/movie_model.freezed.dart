@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$MovieModel {
 
- bool get adult;@JsonKey(name: 'backdrop_path') String get backdropPath;@JsonKey(name: 'genre_ids') List<num> get genreIds; int get id;@JsonKey(name: 'original_language') String get originalLanguage;@JsonKey(name: 'original_title') String get originalTitle; String get overview; num get popularity;@JsonKey(name: 'poster_path') String get posterPath;@JsonKey(name: 'release_date') DateTime get releaseDate; String get title; bool get video;@JsonKey(name: 'vote_average') num get voteAverage;@JsonKey(name: 'vote_count') num get voteCount;
+ bool get adult;@JsonKey(name: 'backdrop_path') String? get backdropPath;@JsonKey(name: 'genre_ids') List<num> get genreIds; int get id;@JsonKey(name: 'original_language') String get originalLanguage;@JsonKey(name: 'original_title') String get originalTitle; String get overview; num get popularity;@JsonKey(name: 'poster_path') String get posterPath;@JsonKey(name: 'release_date') DateTime get releaseDate; String get title; bool get video;@JsonKey(name: 'vote_average') num get voteAverage;@JsonKey(name: 'vote_count') num get voteCount;
 /// Create a copy of MovieModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $MovieModelCopyWith<$Res>  {
   factory $MovieModelCopyWith(MovieModel value, $Res Function(MovieModel) _then) = _$MovieModelCopyWithImpl;
 @useResult
 $Res call({
- bool adult,@JsonKey(name: 'backdrop_path') String backdropPath,@JsonKey(name: 'genre_ids') List<num> genreIds, int id,@JsonKey(name: 'original_language') String originalLanguage,@JsonKey(name: 'original_title') String originalTitle, String overview, num popularity,@JsonKey(name: 'poster_path') String posterPath,@JsonKey(name: 'release_date') DateTime releaseDate, String title, bool video,@JsonKey(name: 'vote_average') num voteAverage,@JsonKey(name: 'vote_count') num voteCount
+ bool adult,@JsonKey(name: 'backdrop_path') String? backdropPath,@JsonKey(name: 'genre_ids') List<num> genreIds, int id,@JsonKey(name: 'original_language') String originalLanguage,@JsonKey(name: 'original_title') String originalTitle, String overview, num popularity,@JsonKey(name: 'poster_path') String posterPath,@JsonKey(name: 'release_date') DateTime releaseDate, String title, bool video,@JsonKey(name: 'vote_average') num voteAverage,@JsonKey(name: 'vote_count') num voteCount
 });
 
 
@@ -65,11 +65,11 @@ class _$MovieModelCopyWithImpl<$Res>
 
 /// Create a copy of MovieModel
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? adult = null,Object? backdropPath = null,Object? genreIds = null,Object? id = null,Object? originalLanguage = null,Object? originalTitle = null,Object? overview = null,Object? popularity = null,Object? posterPath = null,Object? releaseDate = null,Object? title = null,Object? video = null,Object? voteAverage = null,Object? voteCount = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? adult = null,Object? backdropPath = freezed,Object? genreIds = null,Object? id = null,Object? originalLanguage = null,Object? originalTitle = null,Object? overview = null,Object? popularity = null,Object? posterPath = null,Object? releaseDate = null,Object? title = null,Object? video = null,Object? voteAverage = null,Object? voteCount = null,}) {
   return _then(_self.copyWith(
 adult: null == adult ? _self.adult : adult // ignore: cast_nullable_to_non_nullable
-as bool,backdropPath: null == backdropPath ? _self.backdropPath : backdropPath // ignore: cast_nullable_to_non_nullable
-as String,genreIds: null == genreIds ? _self.genreIds : genreIds // ignore: cast_nullable_to_non_nullable
+as bool,backdropPath: freezed == backdropPath ? _self.backdropPath : backdropPath // ignore: cast_nullable_to_non_nullable
+as String?,genreIds: null == genreIds ? _self.genreIds : genreIds // ignore: cast_nullable_to_non_nullable
 as List<num>,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,originalLanguage: null == originalLanguage ? _self.originalLanguage : originalLanguage // ignore: cast_nullable_to_non_nullable
 as String,originalTitle: null == originalTitle ? _self.originalTitle : originalTitle // ignore: cast_nullable_to_non_nullable
@@ -166,7 +166,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool adult, @JsonKey(name: 'backdrop_path')  String backdropPath, @JsonKey(name: 'genre_ids')  List<num> genreIds,  int id, @JsonKey(name: 'original_language')  String originalLanguage, @JsonKey(name: 'original_title')  String originalTitle,  String overview,  num popularity, @JsonKey(name: 'poster_path')  String posterPath, @JsonKey(name: 'release_date')  DateTime releaseDate,  String title,  bool video, @JsonKey(name: 'vote_average')  num voteAverage, @JsonKey(name: 'vote_count')  num voteCount)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool adult, @JsonKey(name: 'backdrop_path')  String? backdropPath, @JsonKey(name: 'genre_ids')  List<num> genreIds,  int id, @JsonKey(name: 'original_language')  String originalLanguage, @JsonKey(name: 'original_title')  String originalTitle,  String overview,  num popularity, @JsonKey(name: 'poster_path')  String posterPath, @JsonKey(name: 'release_date')  DateTime releaseDate,  String title,  bool video, @JsonKey(name: 'vote_average')  num voteAverage, @JsonKey(name: 'vote_count')  num voteCount)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MovieModel() when $default != null:
 return $default(_that.adult,_that.backdropPath,_that.genreIds,_that.id,_that.originalLanguage,_that.originalTitle,_that.overview,_that.popularity,_that.posterPath,_that.releaseDate,_that.title,_that.video,_that.voteAverage,_that.voteCount);case _:
@@ -187,7 +187,7 @@ return $default(_that.adult,_that.backdropPath,_that.genreIds,_that.id,_that.ori
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool adult, @JsonKey(name: 'backdrop_path')  String backdropPath, @JsonKey(name: 'genre_ids')  List<num> genreIds,  int id, @JsonKey(name: 'original_language')  String originalLanguage, @JsonKey(name: 'original_title')  String originalTitle,  String overview,  num popularity, @JsonKey(name: 'poster_path')  String posterPath, @JsonKey(name: 'release_date')  DateTime releaseDate,  String title,  bool video, @JsonKey(name: 'vote_average')  num voteAverage, @JsonKey(name: 'vote_count')  num voteCount)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool adult, @JsonKey(name: 'backdrop_path')  String? backdropPath, @JsonKey(name: 'genre_ids')  List<num> genreIds,  int id, @JsonKey(name: 'original_language')  String originalLanguage, @JsonKey(name: 'original_title')  String originalTitle,  String overview,  num popularity, @JsonKey(name: 'poster_path')  String posterPath, @JsonKey(name: 'release_date')  DateTime releaseDate,  String title,  bool video, @JsonKey(name: 'vote_average')  num voteAverage, @JsonKey(name: 'vote_count')  num voteCount)  $default,) {final _that = this;
 switch (_that) {
 case _MovieModel():
 return $default(_that.adult,_that.backdropPath,_that.genreIds,_that.id,_that.originalLanguage,_that.originalTitle,_that.overview,_that.popularity,_that.posterPath,_that.releaseDate,_that.title,_that.video,_that.voteAverage,_that.voteCount);case _:
@@ -207,7 +207,7 @@ return $default(_that.adult,_that.backdropPath,_that.genreIds,_that.id,_that.ori
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool adult, @JsonKey(name: 'backdrop_path')  String backdropPath, @JsonKey(name: 'genre_ids')  List<num> genreIds,  int id, @JsonKey(name: 'original_language')  String originalLanguage, @JsonKey(name: 'original_title')  String originalTitle,  String overview,  num popularity, @JsonKey(name: 'poster_path')  String posterPath, @JsonKey(name: 'release_date')  DateTime releaseDate,  String title,  bool video, @JsonKey(name: 'vote_average')  num voteAverage, @JsonKey(name: 'vote_count')  num voteCount)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool adult, @JsonKey(name: 'backdrop_path')  String? backdropPath, @JsonKey(name: 'genre_ids')  List<num> genreIds,  int id, @JsonKey(name: 'original_language')  String originalLanguage, @JsonKey(name: 'original_title')  String originalTitle,  String overview,  num popularity, @JsonKey(name: 'poster_path')  String posterPath, @JsonKey(name: 'release_date')  DateTime releaseDate,  String title,  bool video, @JsonKey(name: 'vote_average')  num voteAverage, @JsonKey(name: 'vote_count')  num voteCount)?  $default,) {final _that = this;
 switch (_that) {
 case _MovieModel() when $default != null:
 return $default(_that.adult,_that.backdropPath,_that.genreIds,_that.id,_that.originalLanguage,_that.originalTitle,_that.overview,_that.popularity,_that.posterPath,_that.releaseDate,_that.title,_that.video,_that.voteAverage,_that.voteCount);case _:
@@ -222,11 +222,11 @@ return $default(_that.adult,_that.backdropPath,_that.genreIds,_that.id,_that.ori
 @JsonSerializable()
 
 class _MovieModel implements MovieModel {
-   _MovieModel({required this.adult, @JsonKey(name: 'backdrop_path') required this.backdropPath, @JsonKey(name: 'genre_ids') required final  List<num> genreIds, required this.id, @JsonKey(name: 'original_language') required this.originalLanguage, @JsonKey(name: 'original_title') required this.originalTitle, required this.overview, required this.popularity, @JsonKey(name: 'poster_path') required this.posterPath, @JsonKey(name: 'release_date') required this.releaseDate, required this.title, required this.video, @JsonKey(name: 'vote_average') required this.voteAverage, @JsonKey(name: 'vote_count') required this.voteCount}): _genreIds = genreIds;
+   _MovieModel({required this.adult, @JsonKey(name: 'backdrop_path') this.backdropPath, @JsonKey(name: 'genre_ids') required final  List<num> genreIds, required this.id, @JsonKey(name: 'original_language') required this.originalLanguage, @JsonKey(name: 'original_title') required this.originalTitle, required this.overview, required this.popularity, @JsonKey(name: 'poster_path') required this.posterPath, @JsonKey(name: 'release_date') required this.releaseDate, required this.title, required this.video, @JsonKey(name: 'vote_average') required this.voteAverage, @JsonKey(name: 'vote_count') required this.voteCount}): _genreIds = genreIds;
   factory _MovieModel.fromJson(Map<String, dynamic> json) => _$MovieModelFromJson(json);
 
 @override final  bool adult;
-@override@JsonKey(name: 'backdrop_path') final  String backdropPath;
+@override@JsonKey(name: 'backdrop_path') final  String? backdropPath;
  final  List<num> _genreIds;
 @override@JsonKey(name: 'genre_ids') List<num> get genreIds {
   if (_genreIds is EqualUnmodifiableListView) return _genreIds;
@@ -279,7 +279,7 @@ abstract mixin class _$MovieModelCopyWith<$Res> implements $MovieModelCopyWith<$
   factory _$MovieModelCopyWith(_MovieModel value, $Res Function(_MovieModel) _then) = __$MovieModelCopyWithImpl;
 @override @useResult
 $Res call({
- bool adult,@JsonKey(name: 'backdrop_path') String backdropPath,@JsonKey(name: 'genre_ids') List<num> genreIds, int id,@JsonKey(name: 'original_language') String originalLanguage,@JsonKey(name: 'original_title') String originalTitle, String overview, num popularity,@JsonKey(name: 'poster_path') String posterPath,@JsonKey(name: 'release_date') DateTime releaseDate, String title, bool video,@JsonKey(name: 'vote_average') num voteAverage,@JsonKey(name: 'vote_count') num voteCount
+ bool adult,@JsonKey(name: 'backdrop_path') String? backdropPath,@JsonKey(name: 'genre_ids') List<num> genreIds, int id,@JsonKey(name: 'original_language') String originalLanguage,@JsonKey(name: 'original_title') String originalTitle, String overview, num popularity,@JsonKey(name: 'poster_path') String posterPath,@JsonKey(name: 'release_date') DateTime releaseDate, String title, bool video,@JsonKey(name: 'vote_average') num voteAverage,@JsonKey(name: 'vote_count') num voteCount
 });
 
 
@@ -296,11 +296,11 @@ class __$MovieModelCopyWithImpl<$Res>
 
 /// Create a copy of MovieModel
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? adult = null,Object? backdropPath = null,Object? genreIds = null,Object? id = null,Object? originalLanguage = null,Object? originalTitle = null,Object? overview = null,Object? popularity = null,Object? posterPath = null,Object? releaseDate = null,Object? title = null,Object? video = null,Object? voteAverage = null,Object? voteCount = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? adult = null,Object? backdropPath = freezed,Object? genreIds = null,Object? id = null,Object? originalLanguage = null,Object? originalTitle = null,Object? overview = null,Object? popularity = null,Object? posterPath = null,Object? releaseDate = null,Object? title = null,Object? video = null,Object? voteAverage = null,Object? voteCount = null,}) {
   return _then(_MovieModel(
 adult: null == adult ? _self.adult : adult // ignore: cast_nullable_to_non_nullable
-as bool,backdropPath: null == backdropPath ? _self.backdropPath : backdropPath // ignore: cast_nullable_to_non_nullable
-as String,genreIds: null == genreIds ? _self._genreIds : genreIds // ignore: cast_nullable_to_non_nullable
+as bool,backdropPath: freezed == backdropPath ? _self.backdropPath : backdropPath // ignore: cast_nullable_to_non_nullable
+as String?,genreIds: null == genreIds ? _self._genreIds : genreIds // ignore: cast_nullable_to_non_nullable
 as List<num>,id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,originalLanguage: null == originalLanguage ? _self.originalLanguage : originalLanguage // ignore: cast_nullable_to_non_nullable
 as String,originalTitle: null == originalTitle ? _self.originalTitle : originalTitle // ignore: cast_nullable_to_non_nullable

@@ -5,13 +5,13 @@ import 'package:watchbase_app/features/home/domain/entities/movie.dart';
 import 'package:watchbase_app/features/home/domain/repositories/movies_repository.dart';
 import 'package:watchbase_app/features/home/domain/usecases/usecase.dart';
 
-class GetPopularMovies implements UseCase<List<Movie>, NoParams> {
-  GetPopularMovies(MoviesRepository moviesRepository)
+class GetTrendingMovies implements UseCase<List<Movie>, NoParams> {
+  GetTrendingMovies(MoviesRepository moviesRepository)
     : _moviesRepository = moviesRepository;
 
   final MoviesRepository _moviesRepository;
 
   @override
   Future<Either<Failure, List<Movie>>> call(NoParams params) async =>
-      await _moviesRepository.getPopularMovies();
+      await _moviesRepository.getTrendingMovies();
 }

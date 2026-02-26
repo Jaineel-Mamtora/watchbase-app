@@ -4,17 +4,17 @@ import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
 
 import 'package:watchbase_app/core/utils/failure.dart';
-import 'package:watchbase_app/features/home/domain/entities/top_rated_movie.dart';
+import 'package:watchbase_app/features/home/domain/entities/movie.dart';
 import 'package:watchbase_app/features/home/domain/usecases/get_top_rated_movies.dart';
-import 'package:watchbase_app/features/home/presentation/bloc/top_rated_movies_bloc.dart';
+import 'package:watchbase_app/features/home/presentation/bloc/movie_list_bloc.dart';
 
 class MockGetTopRatedMovies extends Mock implements GetTopRatedMovies {}
 
 void main() {
   late MockGetTopRatedMovies mockGetTopRatedMovies;
 
-  final testTopRatedMovies = <TopRatedMovie>[
-    TopRatedMovie(
+  final testTopRatedMovies = <Movie>[
+    Movie(
       id: 1,
       title: 'The Godfather',
       posterUrl: 'https://www.samplemovie/the_godfather.png',
@@ -23,7 +23,7 @@ void main() {
       voteCount: 17806,
       popularity: 100.932,
     ),
-    TopRatedMovie(
+    Movie(
       id: 2,
       title: 'The Shawshank Redemption',
       posterUrl: 'https://www.samplemovie/the_shawshank_redemption.png',
@@ -38,48 +38,48 @@ void main() {
     mockGetTopRatedMovies = MockGetTopRatedMovies();
   });
 
-  group('TopRatedMoviesBloc', () {
+  group('MovieListBloc', () {
     test('initial state is TopRatedMoviesInitial', () {
       expect(
-        TopRatedMoviesBloc(mockGetTopRatedMovies).state,
-        const TopRatedMoviesInitial(),
+        MovieListBloc(mockGetTopRatedMovies).state,
+        const MovieListInitial(),
       );
     });
 
-    blocTest<TopRatedMoviesBloc, TopRatedMoviesState>(
-      'emits [TopRatedMoviesLoading, TopRatedMoviesSuccess] when fetch succeeds',
-      build: () => TopRatedMoviesBloc(mockGetTopRatedMovies),
+    blocTest<MovieListBloc, MovieListState>(
+      'emits [MovieListLoading, MovieListSuccess] when fetch succeeds',
+      build: () => MovieListBloc(mockGetTopRatedMovies),
       setUp: () {
         when(
-          () => mockGetTopRatedMovies(),
+          () => mockGetTopRatedMovies(const NoParams()),
         ).thenAnswer((_) async => Right(testTopRatedMovies));
       },
-      act: (bloc) => bloc.add(const TopRatedMoviesFetch()),
+      act: (bloc) => bloc.add(const MovieListFetch()),
       expect: () => [
-        const TopRatedMoviesLoading(),
-        TopRatedMoviesSuccess(topRatedMovies: testTopRatedMovies),
+        const MovieListLoading(),
+        MovieListSuccess(testTopRatedMovies),
       ],
       verify: (_) {
-        verify(() => mockGetTopRatedMovies()).called(1);
+        verify(() => mockGetTopRatedMovies(const NoParams())).called(1);
         verifyNoMoreInteractions(mockGetTopRatedMovies);
       },
     );
 
-    blocTest<TopRatedMoviesBloc, TopRatedMoviesState>(
-      'emits [TopRatedMoviesLoading, TopRatedMoviesError] when fetch fails',
-      build: () => TopRatedMoviesBloc(mockGetTopRatedMovies),
+    blocTest<MovieListBloc, MovieListState>(
+      'emits [MovieListLoading, MovieListError] when fetch fails',
+      build: () => MovieListBloc(mockGetTopRatedMovies),
       setUp: () {
-        when(() => mockGetTopRatedMovies()).thenAnswer(
+        when(() => mockGetTopRatedMovies(const NoParams())).thenAnswer(
           (_) async => const Left(ServerFailure(message: 'Server error')),
         );
       },
-      act: (bloc) => bloc.add(const TopRatedMoviesFetch()),
+      act: (bloc) => bloc.add(const MovieListFetch()),
       expect: () => const [
-        TopRatedMoviesLoading(),
-        TopRatedMoviesError('Server error'),
+        MovieListLoading(),
+        MovieListError('Server error'),
       ],
       verify: (_) {
-        verify(() => mockGetTopRatedMovies()).called(1);
+        verify(() => mockGetTopRatedMovies(const NoParams())).called(1);
         verifyNoMoreInteractions(mockGetTopRatedMovies);
       },
     );

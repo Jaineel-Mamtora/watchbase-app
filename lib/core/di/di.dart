@@ -6,8 +6,7 @@ import 'package:watchbase_app/features/home/data/repositories/movies_repository_
 import 'package:watchbase_app/features/home/domain/repositories/movies_repository.dart';
 import 'package:watchbase_app/features/home/domain/usecases/get_popular_movies.dart';
 import 'package:watchbase_app/features/home/domain/usecases/get_top_rated_movies.dart';
-import 'package:watchbase_app/features/home/presentation/bloc/popular_movies_bloc.dart';
-import 'package:watchbase_app/features/home/presentation/bloc/top_rated_movies_bloc.dart';
+import 'package:watchbase_app/features/home/presentation/bloc/movie_list_bloc.dart';
 
 final di = GetIt.instance;
 
@@ -42,14 +41,16 @@ Future<void> initDependencies() async {
   );
 
   // Bloc
-  di.registerFactory<PopularMoviesBloc>(
-    () => PopularMoviesBloc(
+  di.registerFactory<MovieListBloc>(
+    () => MovieListBloc(
       di<GetPopularMovies>(),
     ),
+    instanceName: 'PopularBloc',
   );
-  di.registerFactory<TopRatedMoviesBloc>(
-    () => TopRatedMoviesBloc(
+  di.registerFactory<MovieListBloc>(
+    () => MovieListBloc(
       di<GetTopRatedMovies>(),
     ),
+    instanceName: 'TopRatedBloc',
   );
 }

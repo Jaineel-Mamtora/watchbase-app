@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:watchbase_app/core/utils/platform_info.dart';
 import 'package:watchbase_app/core/utils/responsive_breakpoints.dart';
-import 'package:watchbase_app/features/home/domain/entities/movie_list_item.dart';
+import 'package:watchbase_app/features/home/domain/entities/movie.dart';
 import 'package:watchbase_app/features/home/presentation/widgets/movie_card.dart';
 
 class MovieListSection extends StatelessWidget {
@@ -14,7 +14,7 @@ class MovieListSection extends StatelessWidget {
     super.key,
   });
 
-  final List<MovieListItem> movies;
+  final List<Movie> movies;
   final String title;
   final bool isLoading;
   final int skeletonItemCount;
@@ -31,7 +31,7 @@ class MovieListSection extends StatelessWidget {
             webTokens?.posterWidth ??
             (screenWidth < 600
                 ? screenWidth *
-                      0.42 // phones
+                      0.28 // phones
                 : screenWidth * 0.25); // tablets
         final titleHorizontalPadding =
             webTokens?.titleHorizontalPadding ?? 16.0;

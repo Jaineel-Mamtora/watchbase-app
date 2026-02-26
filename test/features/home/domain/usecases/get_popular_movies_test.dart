@@ -3,7 +3,7 @@ import 'package:fpdart/fpdart.dart';
 import 'package:mocktail/mocktail.dart';
 
 import 'package:watchbase_app/core/utils/failure.dart';
-import 'package:watchbase_app/features/home/domain/entities/popular_movie.dart';
+import 'package:watchbase_app/features/home/domain/entities/movie.dart';
 import 'package:watchbase_app/features/home/domain/repositories/movies_repository.dart';
 import 'package:watchbase_app/features/home/domain/usecases/get_popular_movies.dart';
 
@@ -22,14 +22,14 @@ void main() {
   });
 
   final testPopularMovies = [
-    PopularMovie(
+    Movie(
       id: 1,
       title: 'Ant-Man and the Wasp: Quantumania',
       posterUrl: 'https://www.samplemovie/antman_and_the_wasp.png',
       releaseDate: DateTime.parse('2023-02-15'),
       popularity: 8567.865,
     ),
-    PopularMovie(
+    Movie(
       id: 2,
       title: 'Avatar: The Way of Water',
       posterUrl: 'https://www.samplemovie/avatar_the_way_of_water.png',
@@ -48,7 +48,7 @@ void main() {
       );
 
       // act
-      final result = await usecase();
+      final result = await usecase(const NoParams());
 
       // assert
       expect(result, Right(testPopularMovies));
@@ -64,7 +64,7 @@ void main() {
       ).thenAnswer((_) async => const Left(failure));
 
       // act
-      final result = await usecase();
+      final result = await usecase(const NoParams());
 
       // assert
       expect(result, const Left(failure));

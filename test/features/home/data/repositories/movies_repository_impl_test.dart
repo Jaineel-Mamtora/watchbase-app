@@ -7,9 +7,7 @@ import 'package:watchbase_app/features/home/data/datasources/movies_remote_data_
 import 'package:watchbase_app/features/home/data/models/movie_model.dart';
 import 'package:watchbase_app/features/home/data/models/movies_response_model.dart';
 import 'package:watchbase_app/features/home/data/repositories/movies_repository_impl.dart';
-import 'package:watchbase_app/features/home/domain/entities/movie_list_category.dart';
-import 'package:watchbase_app/features/home/domain/entities/popular_movie.dart';
-import 'package:watchbase_app/features/home/domain/entities/top_rated_movie.dart';
+import 'package:watchbase_app/features/home/domain/entities/movie.dart';
 
 class MockMoviesRemoteDataSource extends Mock
     implements MoviesRemoteDataSource {}
@@ -82,14 +80,12 @@ void main() {
       () async {
         // arrange dependencies + stubs
         when(
-          () => moviesRemoteDataSource.fetchMovies(
-            MovieListCategory.popular,
-          ),
+          () => moviesRemoteDataSource.fetchPopularMovies(),
         ).thenAnswer((_) async => testPopularMoviesModel);
 
         // act (call usecase/repository/add event)
-        final Either<Failure, List<PopularMovie>> result =
-            await moviesRepositoryImpl.getPopularMovies();
+        final Either<Failure, List<Movie>> result = await moviesRepositoryImpl
+            .getPopularMovies();
 
         // assert outputs (states, returned values, thrown errors)
         expect(result.isRight(), isTrue);
@@ -97,7 +93,7 @@ void main() {
         result.match(
           (l) => fail('Expected Right, not left $l'),
           (r) {
-            expect(r, isA<List<PopularMovie>>());
+            expect(r, isA<List<Movie>>());
             expect(r, hasLength(2));
 
             // spot-check mapping
@@ -109,9 +105,7 @@ void main() {
         );
 
         verify(
-          () => moviesRemoteDataSource.fetchMovies(
-            MovieListCategory.popular,
-          ),
+          () => moviesRemoteDataSource.fetchPopularMovies(),
         ).called(1);
         verifyNoMoreInteractions(moviesRemoteDataSource);
       },
@@ -125,13 +119,11 @@ void main() {
         );
 
         when(
-          () => moviesRemoteDataSource.fetchMovies(
-            MovieListCategory.popular,
-          ),
+          () => moviesRemoteDataSource.fetchPopularMovies(),
         ).thenThrow(failure);
 
-        final Either<Failure, List<PopularMovie>> result =
-            await moviesRepositoryImpl.getPopularMovies();
+        final Either<Failure, List<Movie>> result = await moviesRepositoryImpl
+            .getPopularMovies();
 
         expect(result.isLeft(), isTrue);
         result.match(
@@ -140,9 +132,7 @@ void main() {
         );
 
         verify(
-          () => moviesRemoteDataSource.fetchMovies(
-            MovieListCategory.popular,
-          ),
+          () => moviesRemoteDataSource.fetchPopularMovies(),
         ).called(1);
         verifyNoMoreInteractions(moviesRemoteDataSource);
       },
@@ -152,13 +142,11 @@ void main() {
       'should wrap non-Failure errors in ServerFailure',
       () async {
         when(
-          () => moviesRemoteDataSource.fetchMovies(
-            MovieListCategory.popular,
-          ),
+          () => moviesRemoteDataSource.fetchPopularMovies(),
         ).thenThrow(Exception('Some server failed'));
 
-        final Either<Failure, List<PopularMovie>> result =
-            await moviesRepositoryImpl.getPopularMovies();
+        final Either<Failure, List<Movie>> result = await moviesRepositoryImpl
+            .getPopularMovies();
 
         expect(result.isLeft(), isTrue);
         result.match(
@@ -170,9 +158,7 @@ void main() {
         );
 
         verify(
-          () => moviesRemoteDataSource.fetchMovies(
-            MovieListCategory.popular,
-          ),
+          () => moviesRemoteDataSource.fetchPopularMovies(),
         ).called(1);
         verifyNoMoreInteractions(moviesRemoteDataSource);
       },
@@ -185,14 +171,14 @@ void main() {
           () => moviesRemoteDataSource.fetchTopRatedMovies(),
         ).thenAnswer((_) async => testPopularMoviesModel);
 
-        final Either<Failure, List<TopRatedMovie>> result =
-            await moviesRepositoryImpl.getTopRatedMovies();
+        final Either<Failure, List<Movie>> result = await moviesRepositoryImpl
+            .getTopRatedMovies();
 
         expect(result.isRight(), isTrue);
         result.match(
           (l) => fail('Expected Right, not left $l'),
           (r) {
-            expect(r, isA<List<TopRatedMovie>>());
+            expect(r, isA<List<Movie>>());
             expect(r, hasLength(2));
             expect(r[0].voteAverage, 6.5);
             expect(r[1].voteCount, 7535);

@@ -30,3 +30,10 @@ class ParsingFailure extends Failure {
 class NotFoundFailure extends Failure {
   const NotFoundFailure(super.message);
 }
+
+class NoParams extends Equatable {
+  const NoParams();
+
+  @override
+  List<Object> get props => [];
+}

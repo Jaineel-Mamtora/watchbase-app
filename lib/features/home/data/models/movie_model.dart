@@ -7,7 +7,7 @@ part 'movie_model.g.dart';
 abstract class MovieModel with _$MovieModel {
   factory MovieModel({
     required bool adult,
-    @JsonKey(name: 'backdrop_path') required String backdropPath,
+    @JsonKey(name: 'backdrop_path') String? backdropPath,
     @JsonKey(name: 'genre_ids') required List<num> genreIds,
     required int id,
     @JsonKey(name: 'original_language') required String originalLanguage,

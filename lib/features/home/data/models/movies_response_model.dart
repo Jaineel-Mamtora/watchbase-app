@@ -2,8 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'package:watchbase_app/core/network/tmdb_image_url_builder.dart';
 import 'package:watchbase_app/features/home/data/models/movie_model.dart';
-import 'package:watchbase_app/features/home/domain/entities/popular_movie.dart';
-import 'package:watchbase_app/features/home/domain/entities/top_rated_movie.dart';
+import 'package:watchbase_app/features/home/domain/entities/movie.dart';
 
 part 'movies_response_model.freezed.dart';
 part 'movies_response_model.g.dart';
@@ -22,10 +21,10 @@ abstract class MoviesResponseModel with _$MoviesResponseModel {
 }
 
 extension PopularMoviesModelX on MoviesResponseModel {
-  List<PopularMovie> toPopularEntity() {
-    final List<PopularMovie> popularMovies = results
+  List<Movie> toPopularEntity() {
+    final List<Movie> popularMovies = results
         .map(
-          (result) => PopularMovie(
+          (result) => Movie(
             id: result.id,
             title: result.title,
             posterUrl: TmdbImageUrlBuilder.poster(result.posterPath),
@@ -38,10 +37,10 @@ extension PopularMoviesModelX on MoviesResponseModel {
     return popularMovies;
   }
 
-  List<TopRatedMovie> toTopRatedEntity() {
-    final List<TopRatedMovie> topRatedMovies = results
+  List<Movie> toTopRatedEntity() {
+    final List<Movie> topRatedMovies = results
         .map(
-          (result) => TopRatedMovie(
+          (result) => Movie(
             id: result.id,
             title: result.title,
             posterUrl: TmdbImageUrlBuilder.poster(result.posterPath),
@@ -54,5 +53,26 @@ extension PopularMoviesModelX on MoviesResponseModel {
         .toList();
 
     return topRatedMovies;
+  }
+
+  List<Movie> toTrendingEntity() {
+    final trendingMovies = <Movie>[];
+    for (var i = 0; i < results.length; i++) {
+      if (results[i].backdropPath == null) {
+        continue;
+      }
+
+      final movie = Movie(
+        id: results[i].id,
+        title: results[i].title,
+        posterUrl: TmdbImageUrlBuilder.poster(results[i].backdropPath!),
+        releaseDate: results[i].releaseDate,
+        voteAverage: results[i].voteAverage,
+      );
+
+      trendingMovies.add(movie);
+    }
+
+    return trendingMovies;
   }
 }

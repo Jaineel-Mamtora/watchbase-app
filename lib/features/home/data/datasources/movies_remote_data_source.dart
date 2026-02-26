@@ -11,12 +11,15 @@ class MoviesRemoteDataSource {
   final DioClient _dioClient;
 
   Future<PopularMoviesModel> fetchPopularMovies() async =>
-      fetchMovies(MovieListCategory.popular);
+      _fetchMovies(MovieListCategory.popular);
 
   Future<TopRatedMoviesModel> fetchTopRatedMovies() async =>
-      fetchMovies(MovieListCategory.topRated);
+      _fetchMovies(MovieListCategory.topRated);
 
-  Future<MoviesResponseModel> fetchMovies(MovieListCategory category) async {
+  Future<TrendingMoviesModel> fetchTrendingMovies() async =>
+      _fetchMovies(MovieListCategory.trending);
+
+  Future<MoviesResponseModel> _fetchMovies(MovieListCategory category) async {
     final response = await _dioClient.get(_pathFor(category));
 
     if (response.statusCode != 200) {
@@ -51,6 +54,8 @@ class MoviesRemoteDataSource {
         return '/${Constants.apiVersionV3}/movie/popular';
       case MovieListCategory.topRated:
         return '/${Constants.apiVersionV3}/movie/top_rated';
+      case MovieListCategory.trending:
+        return '/${Constants.apiVersionV3}/trending/movie/day';
     }
   }
 }
