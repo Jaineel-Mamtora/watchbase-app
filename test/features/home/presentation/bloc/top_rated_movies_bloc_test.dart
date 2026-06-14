@@ -17,7 +17,7 @@ void main() {
     Movie(
       id: 1,
       title: 'The Godfather',
-      posterUrl: 'https://www.samplemovie/the_godfather.png',
+      posterUrl: 'https://www.samplemovie.com/the_godfather.png',
       releaseDate: DateTime.parse('1972-03-14'),
       voteAverage: 8.7,
       voteCount: 17806,
@@ -26,7 +26,7 @@ void main() {
     Movie(
       id: 2,
       title: 'The Shawshank Redemption',
-      posterUrl: 'https://www.samplemovie/the_shawshank_redemption.png',
+      posterUrl: 'https://www.samplemovie.com/the_shawshank_redemption.png',
       releaseDate: DateTime.parse('1994-09-23'),
       voteAverage: 8.7,
       voteCount: 23656,

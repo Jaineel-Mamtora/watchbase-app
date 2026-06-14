@@ -25,14 +25,14 @@ void main() {
     Movie(
       id: 1,
       title: 'Ant-Man and the Wasp: Quantumania',
-      posterUrl: 'https://www.samplemovie/antman_and_the_wasp.png',
+      posterUrl: 'https://www.samplemovie.com/antman_and_the_wasp.png',
       releaseDate: DateTime.parse('2023-02-15'),
       popularity: 8567.865,
     ),
     Movie(
       id: 2,
       title: 'Avatar: The Way of Water',
-      posterUrl: 'https://www.samplemovie/avatar_the_way_of_water.png',
+      posterUrl: 'https://www.samplemovie.com/avatar_the_way_of_water.png',
       releaseDate: DateTime.parse('2022-12-14'),
       popularity: 3365.913,
     ),
