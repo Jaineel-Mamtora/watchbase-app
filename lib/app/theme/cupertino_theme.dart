@@ -1,5 +1,5 @@
-import 'package:flutter/cupertino.dart' show CupertinoThemeData;
-import 'package:flutter/material.dart' show Color, Colors;
+import 'package:cupertino_ui/cupertino_ui.dart' show CupertinoThemeData;
+import 'package:material_ui/material_ui.dart' show Color, Colors;
 
 class WatchBaseCupertinoTheme {
   static const Color accent = Colors.blue;

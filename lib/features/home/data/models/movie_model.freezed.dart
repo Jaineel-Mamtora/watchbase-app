@@ -222,7 +222,7 @@ return $default(_that.adult,_that.backdropPath,_that.genreIds,_that.id,_that.ori
 @JsonSerializable()
 
 class _MovieModel implements MovieModel {
-   _MovieModel({required this.adult, @JsonKey(name: 'backdrop_path') this.backdropPath, @JsonKey(name: 'genre_ids') required final  List<num> genreIds, required this.id, @JsonKey(name: 'original_language') required this.originalLanguage, @JsonKey(name: 'original_title') required this.originalTitle, required this.overview, required this.popularity, @JsonKey(name: 'poster_path') required this.posterPath, @JsonKey(name: 'release_date') required this.releaseDate, required this.title, required this.video, @JsonKey(name: 'vote_average') required this.voteAverage, @JsonKey(name: 'vote_count') required this.voteCount}): _genreIds = genreIds;
+   _MovieModel({required this.adult, @JsonKey(name: 'backdrop_path') this.backdropPath, @JsonKey(name: 'genre_ids') required  List<num> genreIds, required this.id, @JsonKey(name: 'original_language') required this.originalLanguage, @JsonKey(name: 'original_title') required this.originalTitle, required this.overview, required this.popularity, @JsonKey(name: 'poster_path') required this.posterPath, @JsonKey(name: 'release_date') required this.releaseDate, required this.title, required this.video, @JsonKey(name: 'vote_average') required this.voteAverage, @JsonKey(name: 'vote_count') required this.voteCount}): _genreIds = genreIds;
   factory _MovieModel.fromJson(Map<String, dynamic> json) => _$MovieModelFromJson(json);
 
 @override final  bool adult;

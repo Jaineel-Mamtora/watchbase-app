@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'package:watchbase_app/features/home/domain/entities/movie.dart';
 import 'package:watchbase_app/features/home/presentation/widgets/trending_movies_carousel_card.dart';

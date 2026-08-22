@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' show ColorScheme;
+import 'package:material_ui/material_ui.dart' show ColorScheme;
 
 import 'package:dynamic_color/dynamic_color.dart';
 
@@ -13,7 +13,7 @@ class ThemeBuilder {
     final core = await DynamicColorPlugin.getCorePalette();
 
     if (core != null) {
-      final light = core.toColorScheme();
+      final light = core.toColorScheme(brightness: .light);
       final dark = core.toColorScheme(brightness: .dark);
       return (light, dark);
     }

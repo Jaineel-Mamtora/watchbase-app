@@ -212,7 +212,7 @@ return $default(_that.page,_that.results,_that.totalPages,_that.totalResults);ca
 @JsonSerializable()
 
 class _MoviesResponseModel implements MoviesResponseModel {
-   _MoviesResponseModel({required this.page, required final  List<MovieModel> results, @JsonKey(name: 'total_pages') required this.totalPages, @JsonKey(name: 'total_results') required this.totalResults}): _results = results;
+   _MoviesResponseModel({required this.page, required  List<MovieModel> results, @JsonKey(name: 'total_pages') required this.totalPages, @JsonKey(name: 'total_results') required this.totalResults}): _results = results;
   factory _MoviesResponseModel.fromJson(Map<String, dynamic> json) => _$MoviesResponseModelFromJson(json);
 
 @override final  num page;

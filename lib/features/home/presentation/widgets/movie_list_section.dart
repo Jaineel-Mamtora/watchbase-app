@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'package:watchbase_app/core/utils/utils.dart';
 import 'package:watchbase_app/features/home/domain/entities/movie.dart';

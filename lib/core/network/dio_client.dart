@@ -169,6 +169,10 @@ class DioClient {
         return ServerFailure(
           message: error.message ?? 'Unexpected error occurred.',
         );
+      case DioExceptionType.transformTimeout:
+        return const ParsingFailure(
+          'The response data was received, but processing/JSON decoding took too long.',
+        );
     }
   }
 

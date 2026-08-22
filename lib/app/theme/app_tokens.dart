@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' show immutable, Color;
+import 'package:material_ui/material_ui.dart' show immutable, Color;
 
 @immutable
 class AppTokens {

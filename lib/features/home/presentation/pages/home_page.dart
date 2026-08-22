@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 import 'package:watchbase_app/features/home/presentation/widgets/popular_movies_section.dart';
 import 'package:watchbase_app/features/home/presentation/widgets/top_rated_movies_section.dart';
